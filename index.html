@@ -167,7 +167,8 @@
   .term.open .term-popup{opacity:1; transform:translateY(0); pointer-events:auto;}
 
   /* ---------- Evidence log (specializations) ---------- */
-  .evidence-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px;}
+  .evidence-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;}
+  @media (max-width:560px){ .evidence-grid{grid-template-columns:1fr;} }
   .evidence-tag{
     position:relative; background:var(--bg-panel); border:1px solid var(--border); color:var(--text-dim); font-size:13px;
     padding:10px 14px 10px 22px; border-radius:3px;
@@ -289,7 +290,7 @@
       </div>
       <div class="note-block gold">
         <div class="note-label">Field Note — Today</div>
-        <p>That thread carried me into enterprise security, where I now own MFA deployment, access lifecycle management, and CIS Controls auditing across a 1,000+ user hybrid environment. I hold an active <strong>TS/SCI clearance</strong>, <strong>CompTIA Security+</strong>, and the <strong>UNC Charlotte Cybersecurity Certificate</strong> (4.0 GPA), and I'm bilingual in English and Spanish.</p>
+        <p>That instinct for pattern recognition — spotting what doesn't add up — is still the throughline. It shows up in access reviews and governance work now, and it's the same instinct I want to keep pointing toward fraud prevention, data loss prevention, OSINT, and investigative work: any problem that comes down to digging until the picture makes sense. I hold an active <strong>TS/SCI clearance</strong>, <strong>CompTIA Security+</strong>, and the <strong>UNC Charlotte Cybersecurity Certificate</strong> (4.0 GPA), and I'm bilingual in English and Spanish.</p>
       </div>
       <div class="doc-aside">
         <span class="doc-aside-label">Off the record —</span> When I'm not auditing access controls professionally, I'm doing it recreationally: on the pickleball court, and at home with two dogs who fail every audit but somehow still hold all the access.
@@ -318,9 +319,11 @@
       <div class="evidence-tag">SIEM / Threat Monitoring</div>
       <div class="evidence-tag">Vulnerability Management</div>
       <div class="evidence-tag">Data Security &amp; DLP</div>
-      <div class="evidence-tag">NIST / DHS / CISA Compliance</div>
+      <div class="evidence-tag">Governance, Risk &amp; Compliance (GRC)</div>
       <div class="evidence-tag">Cloud &amp; Directory Services</div>
       <div class="evidence-tag">Security Awareness Training</div>
+      <div class="evidence-tag">Fraud Prevention</div>
+      <div class="evidence-tag">OSINT &amp; Investigations</div>
     </div>
   </section>
 
