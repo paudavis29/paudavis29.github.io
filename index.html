@@ -227,6 +227,25 @@
   .timeline-dates{color:var(--text-faint);}
 
   footer{border-top:1px solid var(--border); padding:24px 0 40px; color:var(--text-faint); font-size:11.5px; font-family:'Special Elite', monospace; letter-spacing:0.05em; text-align:center;}
+
+  /* ---------- Access request modal ---------- */
+  .modal-overlay{position:fixed; inset:0; background:rgba(4,7,12,0.72); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; opacity:0; pointer-events:none; transition:opacity .15s ease;}
+  .modal-overlay.open{opacity:1; pointer-events:auto;}
+  .modal-card{background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius); padding:26px 28px; max-width:380px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.6);}
+  .modal-title{font-family:'Special Elite', monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); margin-bottom:6px;}
+  .modal-sub{font-size:12.5px; color:var(--text-faint); margin-bottom:20px; line-height:1.5;}
+  .modal-field{margin-bottom:14px;}
+  .modal-field label{display:block; font-family:'Special Elite', monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-faint); margin-bottom:6px;}
+  .modal-field input, .modal-field select{
+    width:100%; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius);
+    color:var(--text); font-family:'Courier Prime', monospace; font-size:13px; padding:9px 10px;
+  }
+  .modal-field input:focus, .modal-field select:focus{outline:2px solid var(--link); outline-offset:1px;}
+  .modal-actions{display:flex; gap:10px; margin-top:20px; justify-content:flex-end;}
+  .modal-close{background:none; border:1px solid var(--border); color:var(--text-dim); font-family:'Special Elite', monospace; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; padding:9px 14px; border-radius:var(--radius); cursor:pointer;}
+  .modal-submit{background:var(--stamp); border:1px solid var(--stamp); color:#160c0a; font-family:'Special Elite', monospace; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; padding:9px 16px; border-radius:var(--radius); cursor:pointer;}
+  .modal-status{margin-top:14px; font-size:12px; color:var(--green); display:none; line-height:1.5;}
+  .modal-status.show{display:block;}
 </style>
 </head>
 <body>
@@ -264,7 +283,7 @@
     </div>
     <div class="btn-row">
       <a class="btn primary" href="#contact">Follow Up</a>
-      <a class="btn" href="PaulaDavis2026.pdf" target="_blank" rel="noopener">View Full Record</a>
+      <button type="button" class="btn" id="heroRequestBtn">Request Full Record</button>
     </div>
   </section>
 
@@ -424,7 +443,7 @@
       <div><span class="k">Location</span> Memphis, TN area</div>
     </div>
     <div class="btn-row">
-      <a class="btn primary" href="PaulaDavis2026.pdf" download="Paula_Davis_Resume.pdf">Download Full Record</a>
+      <button type="button" class="btn primary" id="contactRequestBtn">Request Full Record</button>
     </div>
   </section>
 
@@ -433,6 +452,37 @@
 <footer>
   <div class="wrap">— End of File · © <span id="year"></span> Paula Davis —</div>
 </footer>
+
+<div class="modal-overlay" id="accessModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="accessModalTitle">
+    <div class="modal-title" id="accessModalTitle">Access Request</div>
+    <div class="modal-sub">This record requires approval before release. Submit a request and I'll follow up directly with the file.</div>
+    <form id="accessForm">
+      <div class="modal-field">
+        <label for="reqName">Name</label>
+        <input type="text" id="reqName" required>
+      </div>
+      <div class="modal-field">
+        <label for="reqEmail">Email</label>
+        <input type="email" id="reqEmail" required>
+      </div>
+      <div class="modal-field">
+        <label for="reqReason">Reason</label>
+        <select id="reqReason">
+          <option>Hiring Manager</option>
+          <option>Recruiter</option>
+          <option>Networking</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="modal-close" id="accessCancel">Cancel</button>
+        <button type="submit" class="modal-submit">Submit Request</button>
+      </div>
+      <div class="modal-status" id="accessStatus">Request drafted in your email client — send it, and I'll follow up with the full record.</div>
+    </form>
+  </div>
+</div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -474,6 +524,44 @@
       t.setAttribute('aria-expanded','false');
     });
   });
+
+  (function(){
+    var modal = document.getElementById('accessModal');
+    var form = document.getElementById('accessForm');
+    var status = document.getElementById('accessStatus');
+    var closeBtn = document.getElementById('accessCancel');
+    var openBtns = [document.getElementById('heroRequestBtn'), document.getElementById('contactRequestBtn')];
+
+    function openModal(){
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      status.classList.remove('show');
+      form.reset();
+      document.getElementById('reqName').focus();
+    }
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+    }
+    openBtns.forEach(function(btn){
+      if(btn){ btn.addEventListener('click', openModal); }
+    });
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if(e.target === modal){ closeModal(); } });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal.classList.contains('open')){ closeModal(); } });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = document.getElementById('reqName').value.trim();
+      var email = document.getElementById('reqEmail').value.trim();
+      var reason = document.getElementById('reqReason').value;
+      var subject = 'Resume Access Request — ' + name;
+      var body = 'Name: ' + name + '\nEmail: ' + email + '\nReason: ' + reason + '\n\nRequesting access to the full record.';
+      var mailto = 'mailto:paudavis29@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      window.location.href = mailto;
+      status.classList.add('show');
+    });
+  })();
 </script>
 
 </body>
