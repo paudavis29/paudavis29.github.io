@@ -6,254 +6,210 @@
 <title>Paula Davis — Information Security Analyst</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0e10;
-    --bg-alt:#12161a;
-    --bg-raise:#171c20;
-    --border:#232a2f;
-    --text:#e7ecee;
-    --text-dim:#8b98a0;
-    --text-faint:#5b656b;
-    --accent:#ffb454;
-    --accent-2:#5eead4;
-    --accent-dim:#7a5a30;
-    --radius:3px;
-    --maxw:880px;
+    --bg:#15120f;
+    --bg-panel:#1c1815;
+    --paper:#e8dfc7;
+    --paper-dark:#d9cca3;
+    --ink:#2b2620;
+    --text:#ece4d3;
+    --text-dim:#a89c86;
+    --text-faint:#6b6153;
+    --stamp:#b8453a;
+    --link:#7fb0ab;
+    --gold:#d1a24a;
+    --green:#6a9b5c;
+    --violet:#8a6fa3;
+    --border:#3a332c;
+    --radius:2px;
+    --maxw:820px;
   }
-
   *{box-sizing:border-box;margin:0;padding:0;}
-
   html{scroll-behavior:smooth;}
-
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
   }
-
   body{
     background:var(--bg);
     color:var(--text);
-    font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    font-family:'Courier Prime', 'Courier New', monospace;
     font-size:15px;
     line-height:1.7;
     -webkit-font-smoothing:antialiased;
   }
-
   body::before{
     content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:radial-gradient(ellipse at 50% -10%, rgba(255,180,84,0.06), transparent 55%);
+    position:fixed; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse at 50% -10%, rgba(184,69,58,0.05), transparent 55%);
     z-index:0;
   }
-
-  a{color:var(--accent-2);text-decoration:none;}
+  a{color:var(--link); text-decoration:none;}
   a:hover{text-decoration:underline;}
-  a:focus-visible, button:focus-visible{outline:2px solid var(--accent-2); outline-offset:2px;}
-
+  a:focus-visible, button:focus-visible{outline:2px solid var(--link); outline-offset:2px;}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
-
-  .todo{
-    color:var(--accent);
-    font-style:italic;
-    opacity:0.75;
-    font-size:0.85em;
-  }
+  .stencil{font-family:'Special Elite', monospace;}
+  .todo{color:var(--stamp); font-style:italic; opacity:0.8; font-size:0.85em;}
   .todo::before{content:"// ";}
 
-  /* ---------- Nav ---------- */
-  header{
-    position:sticky; top:0; z-index:10;
-    background:rgba(11,14,16,0.88);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--border);
+  /* ---------- Nav (folder tabs) ---------- */
+  header{position:sticky; top:0; z-index:10; background:rgba(21,18,15,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex; align-items:center; justify-content:space-between; height:60px; font-size:12.5px;}
+  .case-id{color:var(--text-faint); font-family:'Special Elite', monospace; letter-spacing:0.08em; white-space:nowrap; font-size:11px;}
+  nav ul{list-style:none; display:flex; gap:4px;}
+  nav a{
+    display:inline-block; color:var(--text-dim); background:var(--bg-panel);
+    border:1px solid var(--border); border-bottom:none;
+    padding:9px 14px 7px; border-radius:6px 6px 0 0;
+    font-family:'Special Elite', monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+    transform:translateY(4px); transition:transform .15s ease, background .15s ease, color .15s ease;
   }
-  nav.wrap{
-    display:flex; align-items:center; justify-content:space-between;
-    height:56px;
-    font-size:13px;
-  }
-  .prompt-id{color:var(--text-dim); white-space:nowrap;}
-  .prompt-id .user{color:var(--accent-2);}
-  .prompt-id .host{color:var(--text-dim);}
-  .prompt-id .cwd{color:var(--accent);}
-  nav ul{list-style:none; display:flex; gap:22px;}
-  nav a{color:var(--text-dim); position:relative;}
-  nav a:hover{color:var(--text); text-decoration:none;}
-  nav a::before{content:"./";color:var(--text-faint);}
+  nav a:hover{text-decoration:none; transform:translateY(0); background:var(--bg-panel); color:var(--text); border-color:var(--gold);}
   .nav-toggle{display:none; background:none;border:1px solid var(--border);color:var(--text); padding:6px 10px; border-radius:var(--radius); font-family:inherit;}
-
-  @media (max-width: 680px){
-    nav ul{
-      position:fixed; top:56px; left:0; right:0;
-      background:var(--bg-alt); border-bottom:1px solid var(--border);
+  @media (max-width: 700px){
+    nav ul{position:fixed; top:60px; left:0; right:0; background:var(--bg-panel); border-bottom:1px solid var(--border);
       flex-direction:column; gap:0; padding:8px 24px;
-      transform:translateY(-8px); opacity:0; pointer-events:none;
-      transition:opacity .15s ease, transform .15s ease;
-    }
+      transform:translateY(-8px); opacity:0; pointer-events:none; transition:opacity .15s ease, transform .15s ease;}
     nav ul.open{opacity:1; pointer-events:auto; transform:translateY(0);}
-    nav ul li{border-top:1px solid var(--border);}
-    nav ul li:first-child{border-top:none;}
-    nav a{display:block; padding:12px 0;}
+    nav a{display:block; border-radius:0; transform:none; border:none; border-top:1px solid var(--border); padding:12px 0; background:none;}
+    nav ul li:first-child a{border-top:none;}
     .nav-toggle{display:inline-block;}
   }
 
   section{position:relative; z-index:1;}
-
-  .cmd-label{
-    display:flex; align-items:baseline; gap:8px;
-    color:var(--text-dim);
-    font-size:13px;
-    margin-bottom:28px;
-    padding-top:56px; margin-top:-56px;
+  .eyebrow{
+    font-family:'Special Elite', monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--text-faint); margin-bottom:18px;
+    padding-top:60px; margin-top:-60px;
   }
-  .cmd-label .user{color:var(--accent-2);}
-  .cmd-label .sep{color:var(--text-faint);}
-  .cmd-label .cmd{color:var(--text);}
+  .eyebrow .num{color:var(--stamp);}
 
   /* ---------- Hero ---------- */
-  .hero{padding:96px 0 72px;}
-  .hero .cmd-label{margin-bottom:20px; padding-top:0; margin-top:0;}
-  .hero h1{
-    font-size:clamp(28px, 5vw, 44px);
-    font-weight:700;
-    letter-spacing:-0.01em;
-    margin-bottom:6px;
+  .hero{padding:90px 0 70px;}
+  .hero h1{font-family:'Courier Prime', monospace; font-weight:700; font-size:clamp(28px,5vw,42px); letter-spacing:-0.01em; margin-bottom:6px;}
+  .hero .role{color:var(--text-dim); font-size:clamp(14px,2.2vw,16px); margin-bottom:18px;}
+  .stamp{
+    display:inline-block; font-family:'Special Elite', monospace; text-transform:uppercase; letter-spacing:0.15em;
+    color:var(--stamp); border:3px double var(--stamp); border-radius:2px; padding:8px 18px; font-size:14px;
+    transform:rotate(-6deg); opacity:0.9; margin-bottom:22px;
+    animation:stampIn .4s ease-out .2s both;
   }
-  .hero .role{
-    color:var(--accent);
-    font-size:clamp(15px,2.4vw,18px);
-    font-weight:500;
-    margin-bottom:14px;
-  }
-  .hero-tags{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;}
+  @keyframes stampIn{from{transform:rotate(-6deg) scale(1.8); opacity:0;} to{transform:rotate(-6deg) scale(1); opacity:0.9;}}
+  .hero-tags{display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 26px;}
   .hero-tag{
-    font-size:11.5px; color:var(--text-dim); border:1px solid var(--border);
-    padding:4px 10px; border-radius:99px; background:var(--bg-alt);
+    font-size:11px; font-family:'Special Elite', monospace; letter-spacing:0.04em;
+    color:var(--text-dim); border:1px solid var(--border); padding:5px 10px 4px; border-radius:99px; background:var(--bg-panel);
   }
-  .hero .tagline{
-    max-width:620px;
-    color:var(--text-dim);
-    font-size:15px;
-    margin-bottom:36px;
-    border-left:2px solid var(--border);
-    padding-left:16px;
-  }
-  .cursor{
-    display:inline-block; width:8px; height:1em; background:var(--accent);
-    vertical-align:text-bottom; margin-left:2px;
-    animation:blink 1.1s steps(1) infinite;
-  }
-  @keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
-
+  .hero .tagline{max-width:600px; color:var(--text-dim); font-size:15px; margin-bottom:34px; border-left:2px solid var(--border); padding-left:16px;}
   .btn-row{display:flex; gap:12px; flex-wrap:wrap;}
   .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:10px 16px;
-    border-radius:var(--radius);
-    font-size:13px; font-weight:500;
-    border:1px solid var(--border);
-    color:var(--text);
+    display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:var(--radius);
+    font-family:'Special Elite', monospace; font-size:12px; letter-spacing:0.04em; text-transform:uppercase;
+    border:1px solid var(--border); color:var(--text);
     transition:border-color .15s ease, color .15s ease, background .15s ease;
   }
-  .btn:hover{text-decoration:none; border-color:var(--accent); color:var(--accent);}
-  .btn.primary{background:var(--accent); border-color:var(--accent); color:#1a1305;}
-  .btn.primary:hover{background:#ffc370; color:#1a1305;}
+  .btn:hover{text-decoration:none; border-color:var(--stamp); color:var(--stamp);}
+  .btn.primary{background:var(--stamp); border-color:var(--stamp); color:#160c0a;}
+  .btn.primary:hover{background:#c9584c; color:#160c0a;}
 
-  /* ---------- Generic section ---------- */
-  section.block{padding:56px 0; border-top:1px solid var(--border);}
+  section.block{padding:54px 0; border-top:1px solid var(--border);}
 
-  .prose{color:var(--text-dim); max-width:640px;}
-  .prose p + p{margin-top:14px;}
-  .prose strong{color:var(--text); font-weight:600;}
+  /* ---------- Doc card (dark) ---------- */
+  .doc-card{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:28px 30px; max-width:660px;
+  }
+  .doc-card p{color:var(--text-dim);}
+  .doc-card strong{font-weight:700; color:var(--text);}
+  .doc-aside-label{font-family:'Special Elite', monospace; font-weight:400; color:var(--stamp); text-transform:uppercase; font-size:11px; letter-spacing:0.06em;}
+  .doc-aside{margin-top:20px; padding-top:16px; border-top:1px dashed var(--border); font-style:italic; font-size:13px; color:var(--text-dim);}
 
-  /* ---------- Specializations ---------- */
-  .spec-grid{
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-    gap:10px;
-  }
-  .spec-item{
-    border:1px solid var(--border); background:var(--bg-alt);
-    border-radius:var(--radius);
-    padding:12px 14px;
-    font-size:13.5px;
-    color:var(--text-dim);
-    display:flex; align-items:baseline; gap:8px;
-  }
-  .spec-item::before{content:"-"; color:var(--accent);}
+  /* ---------- Profile field notes ---------- */
+  .note-block{margin-bottom:20px; padding-left:16px; border-left:3px solid var(--border);}
+  .note-block:last-of-type{margin-bottom:0;}
+  .note-label{font-family:'Special Elite', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px; color:var(--text-faint);}
+  .note-block.gold{border-left-color:var(--gold);}
+  .note-block.gold .note-label{color:var(--gold);}
+  .note-block.violet{border-left-color:var(--violet);}
+  .note-block.violet .note-label{color:var(--violet);}
+  .note-block.teal{border-left-color:var(--link);}
+  .note-block.teal .note-label{color:var(--link);}
+  .note-highlight{font-weight:700; color:var(--gold);}
 
-  /* ---------- Career / manifest ---------- */
-  .manifest{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;}
-  .entry{padding:22px 22px; border-top:1px solid var(--border);}
-  .entry:first-child{border-top:none;}
-  .entry-head{
-    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px 16px;
-    margin-bottom:4px;
+  /* ---------- Evidence log (specializations) ---------- */
+  .evidence-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px;}
+  .evidence-tag{
+    position:relative; background:var(--bg-panel); border:1px solid var(--border); color:var(--text-dim); font-size:13px;
+    padding:10px 14px 10px 22px; border-radius:3px;
   }
-  .entry-title{font-weight:600; color:var(--text); font-size:15px;}
-  .entry-dates{color:var(--text-faint); font-size:12.5px; white-space:nowrap;}
-  .entry-org{color:var(--accent-2); font-size:13px; margin-bottom:10px;}
-  .entry-desc{color:var(--text-dim); font-size:13.5px; margin-bottom:10px;}
-  .entry ul{list-style:none; display:flex; flex-direction:column; gap:6px;}
-  .entry li{
-    color:var(--text-dim); font-size:13.5px; padding-left:18px; position:relative;
-  }
-  .entry li::before{content:">"; position:absolute; left:0; color:var(--accent-dim);}
-
-  /* ---------- Projects ---------- */
-  .project-card{
-    border:1px solid var(--border); border-radius:var(--radius); background:var(--bg-alt);
-    padding:22px;
-  }
-  .project-card .entry-title{margin-bottom:6px;}
-  .tag-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
-  .tag{
-    font-size:11.5px; color:var(--text-faint); border:1px solid var(--border);
-    padding:3px 8px; border-radius:99px;
+  .evidence-tag::before{
+    content:""; position:absolute; left:9px; top:50%; transform:translateY(-50%);
+    width:6px; height:6px; border-radius:50%; background:var(--gold);
   }
 
-  /* ---------- Certifications ---------- */
-  .cert-list{display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:var(--radius);}
-  .cert-row{
-    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
-    padding:14px 18px; border-top:1px solid var(--border); font-size:13.5px;
-  }
-  .cert-row:first-child{border-top:none;}
-  .cert-name{color:var(--text);}
-  .cert-meta{color:var(--text-faint); text-align:right;}
-  .flag-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:22px;}
-  .flag{
-    display:inline-block; font-size:12.5px; color:var(--accent);
-    border:1px solid var(--accent-dim); background:rgba(255,180,84,0.06);
-    padding:8px 14px; border-radius:var(--radius);
-  }
+  /* ---------- Case history ---------- */
+  .case-log{display:flex; flex-direction:column; gap:12px;}
+  .log-entry{border:1px solid var(--border); background:var(--bg-panel); border-radius:var(--radius); padding:20px 22px;}
+  .log-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px 16px; margin-bottom:4px;}
+  .log-title-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .log-title{font-weight:700; font-size:15px; color:var(--text);}
+  .status-tag{font-family:'Special Elite', monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; padding:2px 8px; border-radius:99px; border:1px solid currentColor;}
+  .status-tag.ongoing{color:var(--stamp);}
+  .status-tag.closed{color:var(--text-faint);}
+  .log-dates{color:var(--text-faint); font-size:12px; white-space:nowrap;}
+  .log-org{color:var(--link); font-size:13px; margin-bottom:10px;}
+  .log-entry ul{list-style:none; display:flex; flex-direction:column; gap:6px;}
+  .log-entry li{color:var(--text-dim); font-size:13.5px; padding-left:16px; position:relative;}
+  .log-entry li::before{content:"–"; position:absolute; left:0; color:var(--text-faint);}
+
+  /* ---------- Credentials ---------- */
+  .cred-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px;}
+  .cred-card{background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px;}
+  .cred-name{font-weight:700; font-size:13.5px; margin-bottom:3px; color:var(--text);}
+  .cred-meta{font-size:11.5px; color:var(--text-faint);}
+  .cred-verified{font-family:'Special Elite', monospace; font-size:10px; letter-spacing:0.1em; color:var(--green); text-transform:uppercase; margin-top:8px; display:inline-block;}
+  .cred-link{display:block; margin-top:6px; font-family:'Special Elite', monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--link);}
+  .flag-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+  .flag{display:inline-block; font-size:11.5px; font-family:'Special Elite', monospace; letter-spacing:0.05em; color:var(--green); border:1px solid var(--green); background:rgba(106,155,92,0.08); padding:7px 12px; border-radius:var(--radius);}
 
   /* ---------- Contact ---------- */
-  .contact-block{padding-bottom:96px;}
+  .contact-block{padding-bottom:90px;}
   .contact-lines{color:var(--text-dim); font-size:14px; display:flex; flex-direction:column; gap:8px; margin-bottom:24px;}
-  .contact-lines .k{color:var(--text-faint); display:inline-block; width:88px;}
+  .contact-lines .k{color:var(--text-faint); font-family:'Special Elite', monospace; font-size:11px; display:inline-block; width:100px; text-transform:uppercase; letter-spacing:0.05em;}
 
-  footer{
-    border-top:1px solid var(--border);
-    padding:24px 0 40px;
-    color:var(--text-faint);
-    font-size:12px;
-  }
+  /* ---------- Findings (highlights) ---------- */
+  .findings-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; margin-bottom:34px;}
+  .finding-card{background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px;}
+  .finding-label{font-family:'Special Elite', monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:9px;}
+  .finding-title{font-weight:700; font-size:14.5px; color:var(--text); margin-bottom:8px;}
+  .finding-desc{font-size:13px; color:var(--text-dim);}
+  .finding-org{font-size:11px; color:var(--text-faint); margin-top:12px; font-family:'Special Elite', monospace; letter-spacing:0.04em;}
+
+  /* ---------- Compact timeline ---------- */
+  .timeline-note{font-size:12.5px; color:var(--text-faint); margin-bottom:14px;}
+  .timeline-compact{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;}
+  .timeline-row{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:11px 16px; border-top:1px solid var(--border); font-size:12.5px; flex-wrap:wrap;}
+  .timeline-row:first-child{border-top:none;}
+  .timeline-role{color:var(--text); font-weight:600;}
+  .timeline-org{color:var(--text-faint);}
+  .timeline-right{display:flex; align-items:center; gap:8px; white-space:nowrap;}
+  .timeline-dates{color:var(--text-faint);}
+
+  footer{border-top:1px solid var(--border); padding:24px 0 40px; color:var(--text-faint); font-size:11.5px; font-family:'Special Elite', monospace; letter-spacing:0.05em; text-align:center;}
 </style>
 </head>
 <body>
 
 <header>
   <nav class="wrap">
-    <div class="prompt-id"><span class="user">paula</span><span class="host">@infosec</span><span class="sep">:</span><span class="cwd">~$</span></div>
+    <div class="case-id">CASE FILE · INFORMATION SECURITY</div>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navList">menu</button>
     <ul id="navList">
-      <li><a href="#about">about</a></li>
-      <li><a href="#specializations">specializations</a></li>
-      <li><a href="#career">career</a></li>
+      <li><a href="#profile">profile</a></li>
+      <li><a href="#evidence">evidence</a></li>
+      <li><a href="#history">history</a></li>
       <li><a href="#credentials">credentials</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
@@ -264,163 +220,146 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="cmd-label"><span class="user">paula@infosec</span><span class="sep">:~$</span> <span class="cmd">whoami</span></div>
     <h1>Paula Davis</h1>
     <div class="role">Information Security Analyst</div>
+    <div class="stamp">Active</div>
     <div class="hero-tags">
       <span class="hero-tag">TS/SCI Active — DHS</span>
       <span class="hero-tag">Bilingual — English / Spanish</span>
       <span class="hero-tag">IAM &amp; MFA at Scale</span>
     </div>
     <div class="tagline">
-      Started in fraud prevention and carrier compliance investigation, moved through federal cyber
-      defense at CISA, and now run identity and access management for a 1,000+ user hybrid environment
-      at IMC Companies.<span class="cursor" aria-hidden="true"></span>
+      First trained to spot what's hidden in flagged transactions and fraudulent carrier schemes.
+      Now applying the same instinct to identity risk and access control — running MFA deployment,
+      entitlement reviews, and controls audits across a 1,000+ user hybrid environment.
     </div>
     <div class="btn-row">
-      <a class="btn primary" href="#contact">./contact.sh</a>
-      <a class="btn" href="PaulaDavis2026.pdf" target="_blank" rel="noopener">cat resume.pdf</a>
+      <a class="btn primary" href="#contact">Follow Up</a>
+      <a class="btn" href="PaulaDavis2026.pdf" target="_blank" rel="noopener">View Full Record</a>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="block" id="about">
-    <div class="cmd-label"><span class="user">paula@infosec</span><span class="sep">:~$</span> <span class="cmd">cat about.md</span></div>
-    <div class="prose">
-      <p>I'm an Information Security Analyst with 4+ years across federal, financial, and enterprise
-      environments, with a home base in identity and access management. My path here wasn't a straight
-      line: I started in fraud prevention and carrier compliance investigation, where pattern analysis
-      on flagged transactions and fraudulent carrier schemes kept exposing the same root cause — gaps
-      in identity verification and access control. That's what pulled me into cybersecurity.</p>
-      <p>From there I moved through <strong>CISA</strong>, reviewing System Security Plans and Privacy
-      Impact Assessments against NIST 800-series controls, before landing at <strong>IMC Companies</strong>,
-      where I now own MFA deployment, access lifecycle management, and CIS Controls auditing across a
-      1,000+ user hybrid environment. I hold an active <strong>TS/SCI clearance</strong>, <strong>CompTIA
-      Security+</strong>, and the <strong>UNC Charlotte Cybersecurity Certificate</strong> (4.0 GPA), and
-      I'm bilingual in English and Spanish.</p>
+  <!-- PROFILE -->
+  <section class="block" id="profile">
+    <div class="eyebrow"><span class="num">Section 01</span> — Subject Profile</div>
+    <div class="doc-card">
+      <div class="note-block gold">
+        <div class="note-label">Field Note — The Discovery</div>
+        <p>While investigating carrier fraud at Armstrong Transport, pattern analysis on flagged carrier data surfaced a scheme that, once shut down, prevented <span class="note-highlight">nearly $5 million</span> in losses. That case is the reason I'm in cybersecurity — it proved that finding what's hidden was the part of the job I actually cared about.</p>
+      </div>
+      <div class="note-block violet">
+        <div class="note-label">Field Note — The Detour</div>
+        <p>As a kid, the plan was to become an FBI agent. Life took a different route — but it eventually landed me at CISA, doing federal cyber defense work that scratched a lot of the same itch.</p>
+      </div>
+      <div class="note-block teal">
+        <div class="note-label">Field Note — Public Service, Interrupted</div>
+        <p>My CISA role ended sooner than planned, a result of broader government workforce changes — not performance. I left on good terms and completed a smooth transition of my responsibilities.</p>
+      </div>
+      <div class="note-block gold">
+        <div class="note-label">Field Note — Today</div>
+        <p>That thread carried me into <strong>IMC Companies</strong>, where I now own MFA deployment, access lifecycle management, and CIS Controls auditing across a 1,000+ user hybrid environment. I hold an active <strong>TS/SCI clearance</strong>, <strong>CompTIA Security+</strong>, and the <strong>UNC Charlotte Cybersecurity Certificate</strong> (4.0 GPA), and I'm bilingual in English and Spanish.</p>
+      </div>
+      <div class="doc-aside"><span class="doc-aside-label">Off the record —</span> When I'm not auditing access controls professionally, I'm doing it recreationally: on the pickleball court, and at home with two dogs who fail every audit but somehow still hold all the access.</div>
     </div>
   </section>
 
-  <!-- SPECIALIZATIONS -->
-  <section class="block" id="specializations">
-    <div class="cmd-label"><span class="user">paula@infosec</span><span class="sep">:~$</span> <span class="cmd">ls ~/specializations/</span></div>
-    <div class="spec-grid">
-      <div class="spec-item">IAM &amp; Identity Governance</div>
-      <div class="spec-item">MFA Deployment at Scale (Microsoft Authenticator)</div>
-      <div class="spec-item">RBAC &amp; Access Reviews</div>
-      <div class="spec-item">CIS Controls Auditing</div>
-      <div class="spec-item">SIEM / Threat Monitoring (Taegis)</div>
-      <div class="spec-item">Vulnerability Management (Nessus)</div>
-      <div class="spec-item">Data Security &amp; DLP (Varonis)</div>
-      <div class="spec-item">NIST / DHS / CISA Compliance</div>
-      <div class="spec-item">Cloud &amp; Directory (Azure AD, Intune, AWS)</div>
-      <div class="spec-item">Security Awareness (KnowBe4)</div>
+  <!-- EVIDENCE / SPECIALIZATIONS -->
+  <section class="block" id="evidence">
+    <div class="eyebrow"><span class="num">Section 02</span> — Evidence Log (Specializations)</div>
+    <div class="evidence-grid">
+      <div class="evidence-tag">IAM &amp; Identity Governance</div>
+      <div class="evidence-tag">MFA Deployment at Scale (Microsoft Authenticator)</div>
+      <div class="evidence-tag">RBAC &amp; Access Reviews</div>
+      <div class="evidence-tag">CIS Controls Auditing</div>
+      <div class="evidence-tag">SIEM / Threat Monitoring (Taegis)</div>
+      <div class="evidence-tag">Vulnerability Management (Nessus)</div>
+      <div class="evidence-tag">Data Security &amp; DLP (Varonis)</div>
+      <div class="evidence-tag">NIST / DHS / CISA Compliance</div>
+      <div class="evidence-tag">Cloud &amp; Directory (Azure AD, Intune, AWS)</div>
+      <div class="evidence-tag">Security Awareness (KnowBe4)</div>
     </div>
   </section>
 
-  <!-- CAREER -->
-  <section class="block" id="career">
-    <div class="cmd-label"><span class="user">paula@infosec</span><span class="sep">:~$</span> <span class="cmd">cat career/manifest.log</span></div>
-    <div class="manifest">
+  <!-- KEY FINDINGS -->
+  <section class="block" id="history">
+    <div class="eyebrow"><span class="num">Section 03</span> — Key Findings</div>
 
-      <div class="entry">
-        <div class="entry-head">
-          <div class="entry-title">Information Security Analyst</div>
-          <div class="entry-dates">Mar 2025 – Present</div>
-        </div>
-        <div class="entry-org">IMC Companies — Collierville, TN</div>
-        <ul>
-          <li>Led enterprise-wide Microsoft Authenticator MFA deployment across 1,000+ users in a hybrid environment — full identity lifecycle ownership</li>
-          <li>Administer Varonis Data Security Platform for sensitive data monitoring, entitlement reviews, and anomaly detection</li>
-          <li>Serve as internal CIS Controls auditor, running safeguard-level assessments and remediation planning</li>
-          <li>Enforce access controls across hybrid cloud (AWS, Azure AD / Intune) with IT and DevOps, covering the full joiner/mover/leaver lifecycle</li>
-          <li>Manage security awareness training via KnowBe4, segmented by role and risk profile</li>
-        </ul>
+    <div class="findings-grid">
+      <div class="finding-card">
+        <div class="finding-label">Finding 01</div>
+        <div class="finding-title">Nearly $5M in losses prevented</div>
+        <div class="finding-desc">Pattern analysis on fraudulent carrier schemes led to a discovery that saved the company close to $5 million — and became the case that redirected an entire career toward cybersecurity.</div>
+        <div class="finding-org">Armstrong Transport Group</div>
       </div>
-
-      <div class="entry">
-        <div class="entry-head">
-          <div class="entry-title">IT Cybersecurity Specialist / Security Analyst</div>
-          <div class="entry-dates">Jun 2024 – Oct 2025</div>
-        </div>
-        <div class="entry-org">CISA — Cybersecurity &amp; Infrastructure Security Agency — Charlotte, NC</div>
-        <ul>
-          <li>Reviewed and maintained System Security Plans, Contingency Plans, and Privacy Impact Assessments against DHS/NIST 800-series controls</li>
-          <li>Ran risk and vulnerability assessments, analyzing Nessus results and coordinating remediation with system owners</li>
-          <li>Monitored DHS ISVM advisories and managed Nessus license distribution program-wide</li>
-          <li>Advised department managers and cyber defense teams on incident escalation and access control design</li>
-        </ul>
+      <div class="finding-card">
+        <div class="finding-label">Finding 02</div>
+        <div class="finding-title">MFA at scale</div>
+        <div class="finding-desc">Led an enterprise-wide Microsoft Authenticator rollout across 1,000+ users in a hybrid environment — full ownership of the identity lifecycle, from provisioning through deprovisioning.</div>
+        <div class="finding-org">IMC Companies</div>
       </div>
-
-      <div class="entry">
-        <div class="entry-head">
-          <div class="entry-title">CyberSuite Technical Support Analyst</div>
-          <div class="entry-dates">Mar 2023 – May 2024</div>
-        </div>
-        <div class="entry-org">Wells Fargo — Charlotte, NC</div>
-        <ul>
-          <li>Validated customer configuration changes via CyberAdmin and UAM tools as primary liaison between clients and product/engineering</li>
-          <li>Tracked production defects and client-reported issues, shortening resolution cycle time</li>
-          <li>Supported after-hours business validation following production releases</li>
-        </ul>
+      <div class="finding-card">
+        <div class="finding-label">Finding 03</div>
+        <div class="finding-title">Federal compliance, verified</div>
+        <div class="finding-desc">Reviewed and maintained System Security Plans and Privacy Impact Assessments against DHS/NIST 800-series controls, keeping systems continuously audit-ready.</div>
+        <div class="finding-org">CISA</div>
       </div>
-
-      <div class="entry">
-        <div class="entry-head">
-          <div class="entry-title">IT Helpdesk Specialist</div>
-          <div class="entry-dates">Dec 2021 – Mar 2023</div>
-        </div>
-        <div class="entry-org">Armstrong Transport Group LLC — Charlotte, NC</div>
-        <ul>
-          <li>Managed IAM onboarding and offboarding company-wide, including provisioning and deactivation workflows</li>
-          <li>Administered the Jira Service Desk queue and escalation workflows</li>
-          <li>Contributed to automation initiatives improving provisioning and configuration processes</li>
-        </ul>
+      <div class="finding-card">
+        <div class="finding-label">Finding 04</div>
+        <div class="finding-title">Internal controls auditor</div>
+        <div class="finding-desc">Runs safeguard-level CIS Controls assessments in-house, translating compliance gaps into remediation plans leadership can actually act on.</div>
+        <div class="finding-org">IMC Companies</div>
       </div>
+    </div>
 
-      <div class="entry">
-        <div class="entry-head">
-          <div class="entry-title">Carrier Relations Manager</div>
-          <div class="entry-dates">Jan 2019 – Dec 2021</div>
-        </div>
-        <div class="entry-org">Armstrong Transport Group LLC — Charlotte, NC</div>
-        <ul>
-          <li>Managed EFS payment approvals and fraud prevention, auditing carrier data against FMCSA regulations</li>
-          <li>Identified fraudulent carrier schemes through pattern analysis — the identity-verification gap that pulled me toward cybersecurity</li>
-          <li>Maintained performance reporting for senior leadership</li>
-        </ul>
+    <div class="timeline-note">Full case history, role by role:</div>
+    <div class="timeline-compact">
+      <div class="timeline-row">
+        <div><span class="timeline-role">Information Security Analyst</span> <span class="timeline-org">— IMC Companies</span></div>
+        <div class="timeline-right"><span class="status-tag ongoing">Ongoing</span><span class="timeline-dates">Mar 2025–Present</span></div>
       </div>
-
-      <div class="entry">
-        <div class="entry-head">
-          <div class="entry-title">Fraud Prevention Analyst</div>
-          <div class="entry-dates">Feb 2012 – Feb 2014</div>
-        </div>
-        <div class="entry-org">Western Union — San José, Costa Rica</div>
-        <ul>
-          <li>Reviewed flagged transactions to identify fraudulent activity across large datasets</li>
-          <li>Collaborated on fraud trend analysis and developed countermeasures to reduce financial exposure</li>
-        </ul>
+      <div class="timeline-row">
+        <div><span class="timeline-role">IT Cybersecurity Specialist / Security Analyst</span> <span class="timeline-org">— CISA</span></div>
+        <div class="timeline-right"><span class="status-tag closed">Closed</span><span class="timeline-dates">Jun 2024–Oct 2025</span></div>
       </div>
-
+      <div class="timeline-row">
+        <div><span class="timeline-role">CyberSuite Technical Support Analyst</span> <span class="timeline-org">— Wells Fargo</span></div>
+        <div class="timeline-right"><span class="status-tag closed">Closed</span><span class="timeline-dates">Mar 2023–May 2024</span></div>
+      </div>
+      <div class="timeline-row">
+        <div><span class="timeline-role">IT Helpdesk Specialist</span> <span class="timeline-org">— Armstrong Transport Group</span></div>
+        <div class="timeline-right"><span class="status-tag closed">Closed</span><span class="timeline-dates">Dec 2021–Mar 2023</span></div>
+      </div>
+      <div class="timeline-row">
+        <div><span class="timeline-role">Carrier Relations Manager</span> <span class="timeline-org">— Armstrong Transport Group</span></div>
+        <div class="timeline-right"><span class="status-tag closed">Closed</span><span class="timeline-dates">Jan 2019–Dec 2021</span></div>
+      </div>
+      <div class="timeline-row">
+        <div><span class="timeline-role">Fraud Prevention Analyst</span> <span class="timeline-org">— Western Union</span></div>
+        <div class="timeline-right"><span class="status-tag closed">Closed</span><span class="timeline-dates">Feb 2012–Feb 2014</span></div>
+      </div>
     </div>
   </section>
 
   <!-- CREDENTIALS -->
   <section class="block" id="credentials">
-    <div class="cmd-label"><span class="user">paula@infosec</span><span class="sep">:~$</span> <span class="cmd">cat credentials.txt</span></div>
-    <div class="cert-list">
-      <div class="cert-row">
-        <span class="cert-name">CompTIA Security+</span>
-        <span class="cert-meta">Active</span>
+    <div class="eyebrow"><span class="num">Section 04</span> — Verified Credentials</div>
+    <div class="cred-grid">
+      <div class="cred-card">
+        <div class="cred-name">CompTIA Security+</div>
+        <div class="cred-meta">Certified Sep 2024 · Exp. Sep 2027</div>
+        <div class="cred-verified">✓ Verified</div>
+        <a class="cred-link" href="CompTIA_Security__ce_certificate.pdf" target="_blank" rel="noopener">View Certificate →</a>
       </div>
-      <div class="cert-row">
-        <span class="cert-name">UNC Charlotte Cybersecurity Certificate</span>
-        <span class="cert-meta">Dec 2022 · GPA 4.00</span>
+      <div class="cred-card">
+        <div class="cred-name">UNC Charlotte Cybersecurity Certificate</div>
+        <div class="cred-meta">Dec 2022 · GPA 4.00</div>
+        <div class="cred-verified">✓ Verified</div>
+        <a class="cred-link" href="Bootcamp_Cert.PDF" target="_blank" rel="noopener">View Certificate →</a>
       </div>
-      <div class="cert-row">
-        <span class="cert-name">A.S. Criminal Justice — American InterContinental University</span>
-        <span class="cert-meta">May 2020 · Dean's List, Honors · GPA 3.95</span>
+      <div class="cred-card">
+        <div class="cred-name">A.S. Criminal Justice</div>
+        <div class="cred-meta">American InterContinental University · May 2020 · Dean's List, Honors · GPA 3.95</div>
+        <div class="cred-verified">✓ Verified</div>
       </div>
     </div>
     <div class="flag-row">
@@ -431,21 +370,21 @@
 
   <!-- CONTACT -->
   <section class="block contact-block" id="contact">
-    <div class="cmd-label"><span class="user">paula@infosec</span><span class="sep">:~$</span> <span class="cmd">./contact.sh</span></div>
+    <div class="eyebrow"><span class="num">Section 05</span> — Follow Up</div>
     <div class="contact-lines">
-      <div><span class="k">email:</span> <a href="mailto:paudavis29@gmail.com">paudavis29@gmail.com</a></div>
-      <div><span class="k">linkedin:</span> <a href="https://www.linkedin.com/in/paula-davis-/" target="_blank" rel="noopener">linkedin.com/in/paula-davis-</a></div>
-      <div><span class="k">location:</span> Memphis, TN area</div>
+      <div><span class="k">Email</span> <a href="mailto:paudavis29@gmail.com">paudavis29@gmail.com</a></div>
+      <div><span class="k">LinkedIn</span> <a href="https://www.linkedin.com/in/paula-davis-/" target="_blank" rel="noopener">linkedin.com/in/paula-davis-</a></div>
+      <div><span class="k">Location</span> Memphis, TN area</div>
     </div>
     <div class="btn-row">
-      <a class="btn primary" href="PaulaDavis2026.pdf" download="Paula_Davis_Resume.pdf">wget resume.pdf</a>
+      <a class="btn primary" href="PaulaDavis2026.pdf" download="Paula_Davis_Resume.pdf">Download Full Record</a>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <div class="wrap">© <span id="year"></span> Paula Davis — built on the command line.</div>
+  <div class="wrap">— End of File · © <span id="year"></span> Paula Davis —</div>
 </footer>
 
 <script>
