@@ -457,18 +457,18 @@
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="accessModalTitle">
     <div class="modal-title" id="accessModalTitle">Access Request</div>
     <div class="modal-sub">This record requires approval before release. Submit a request and I'll follow up directly with the file.</div>
-    <form id="accessForm">
+    <form id="accessForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdTUNb_beoYhKo42Tj8cKthzDv1ZiFVwp5TxexO-a-xJMS0Gw/formResponse" method="POST" target="hidden_iframe">
       <div class="modal-field">
         <label for="reqName">Name</label>
-        <input type="text" id="reqName" required>
+        <input type="text" id="reqName" name="entry.546625500" required>
       </div>
       <div class="modal-field">
         <label for="reqEmail">Email</label>
-        <input type="email" id="reqEmail" required>
+        <input type="email" id="reqEmail" name="entry.24595630" required>
       </div>
       <div class="modal-field">
         <label for="reqReason">Reason</label>
-        <select id="reqReason">
+        <select id="reqReason" name="entry.1411150599">
           <option>Hiring Manager</option>
           <option>Recruiter</option>
           <option>Networking</option>
@@ -479,10 +479,11 @@
         <button type="button" class="modal-close" id="accessCancel">Cancel</button>
         <button type="submit" class="modal-submit">Submit Request</button>
       </div>
-      <div class="modal-status" id="accessStatus">Request drafted in your email client — send it, and I'll follow up with the full record.</div>
+      <div class="modal-status" id="accessStatus">Request submitted — I'll follow up shortly with the full record.</div>
     </form>
   </div>
 </div>
+<iframe name="hidden_iframe" id="hidden_iframe" title="form-submit" style="display:none;"></iframe>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -550,16 +551,9 @@
     modal.addEventListener('click', function(e){ if(e.target === modal){ closeModal(); } });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal.classList.contains('open')){ closeModal(); } });
 
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var name = document.getElementById('reqName').value.trim();
-      var email = document.getElementById('reqEmail').value.trim();
-      var reason = document.getElementById('reqReason').value;
-      var subject = 'Resume Access Request — ' + name;
-      var body = 'Name: ' + name + '\nEmail: ' + email + '\nReason: ' + reason + '\n\nRequesting access to the full record.';
-      var mailto = 'mailto:paudavis29@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      window.location.href = mailto;
+    form.addEventListener('submit', function(){
       status.classList.add('show');
+      setTimeout(closeModal, 2200);
     });
   })();
 </script>
