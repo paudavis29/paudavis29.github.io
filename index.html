@@ -9,20 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#15120f;
-    --bg-panel:#1c1815;
-    --paper:#e8dfc7;
-    --paper-dark:#d9cca3;
-    --ink:#2b2620;
-    --text:#ece4d3;
-    --text-dim:#a89c86;
-    --text-faint:#6b6153;
-    --stamp:#b8453a;
+    --bg:#0c1420;
+    --bg-panel:#141f30;
+    --text:#e6ecf3;
+    --text-dim:#93a1b3;
+    --text-faint:#5b6779;
+    --stamp:#c04f3f;
     --link:#7fb0ab;
     --gold:#d1a24a;
     --green:#6a9b5c;
-    --violet:#8a6fa3;
-    --border:#3a332c;
+    --violet:#9683b8;
+    --border:#263450;
     --radius:2px;
     --maxw:820px;
   }
@@ -43,7 +40,7 @@
   body::before{
     content:"";
     position:fixed; inset:0; pointer-events:none;
-    background:radial-gradient(ellipse at 50% -10%, rgba(184,69,58,0.05), transparent 55%);
+    background:radial-gradient(ellipse at 50% -10%, rgba(209,162,74,0.06), transparent 55%);
     z-index:0;
   }
   a{color:var(--link); text-decoration:none;}
@@ -125,6 +122,12 @@
   .doc-card strong{font-weight:700; color:var(--text);}
   .doc-aside-label{font-family:'Special Elite', monospace; font-weight:400; color:var(--stamp); text-transform:uppercase; font-size:11px; letter-spacing:0.06em;}
   .doc-aside{margin-top:20px; padding-top:16px; border-top:1px dashed var(--border); font-style:italic; font-size:13px; color:var(--text-dim);}
+  .aside-photos{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
+  .polaroid{background:#f2efe6; padding:8px 8px 22px; border-radius:2px; box-shadow:0 12px 26px rgba(0,0,0,0.5); width:128px;}
+  .polaroid:nth-child(1){transform:rotate(-3deg);}
+  .polaroid:nth-child(2){transform:rotate(2.5deg);}
+  .polaroid img{display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:1px;}
+  .polaroid figcaption{text-align:center; font-family:'Special Elite', monospace; font-size:10px; color:#2b2620; margin-top:8px; letter-spacing:0.02em; font-style:normal;}
 
   /* ---------- Profile field notes ---------- */
   .note-block{margin-bottom:20px; padding-left:16px; border-left:3px solid var(--border);}
@@ -136,7 +139,32 @@
   .note-block.violet .note-label{color:var(--violet);}
   .note-block.teal{border-left-color:var(--link);}
   .note-block.teal .note-label{color:var(--link);}
-  .note-highlight{font-weight:700; color:var(--gold);}
+  .note-highlight{font-weight:700;}
+  .note-block.gold .note-highlight{color:var(--gold);}
+  .note-block.violet .note-highlight{color:var(--violet);}
+  .note-block.teal .note-highlight{color:var(--link);}
+
+  /* ---------- Click-to-reveal term ---------- */
+  .term{position:relative; display:inline-block; cursor:pointer; border-bottom:1px dotted currentColor;}
+  .term:focus-visible{outline:2px solid currentColor; outline-offset:3px;}
+  .term-hint{font-size:9px; vertical-align:super; margin-left:2px; opacity:0.75; font-weight:400;}
+  .term-popup{
+    position:absolute; left:0; top:calc(100% + 10px);
+    width:250px; max-width:72vw;
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:12px 14px; box-shadow:0 12px 28px rgba(0,0,0,0.45);
+    font-family:'Courier Prime', monospace; font-weight:400; font-style:normal;
+    font-size:12.5px; line-height:1.5; color:var(--text-dim);
+    opacity:0; transform:translateY(-4px); pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease;
+    z-index:5;
+  }
+  .term-popup::before{
+    content:""; position:absolute; top:-5px; left:14px; width:8px; height:8px;
+    background:var(--bg-panel); border-left:1px solid var(--border); border-top:1px solid var(--border);
+    transform:rotate(45deg);
+  }
+  .term.open .term-popup{opacity:1; transform:translateY(0); pointer-events:auto;}
 
   /* ---------- Evidence log (specializations) ---------- */
   .evidence-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px;}
@@ -243,23 +271,39 @@
   <section class="block" id="profile">
     <div class="eyebrow"><span class="num">Section 01</span> — Subject Profile</div>
     <div class="doc-card">
+      <div class="note-block violet">
+        <div class="note-label">Field Note — Roots</div>
+        <p>Born in Costa Rica, where the guiding philosophy is <span class="term note-highlight" role="button" tabindex="0" aria-expanded="false">Pura Vida<span class="term-hint">?</span><span class="term-popup">Literally "pure life" — but really a way of moving through the world: stay present, don't sweat what you can't control, and appreciate what's actually in front of you.</span></span>. It still shapes how I show up to the job.</p>
+      </div>
       <div class="note-block gold">
         <div class="note-label">Field Note — The Discovery</div>
-        <p>While investigating carrier fraud at Armstrong Transport, pattern analysis on flagged carrier data surfaced a scheme that, once shut down, prevented <span class="note-highlight">nearly $5 million</span> in losses. That case is the reason I'm in cybersecurity — it proved that finding what's hidden was the part of the job I actually cared about.</p>
+        <p>While investigating carrier fraud, pattern analysis on flagged carrier data surfaced a scheme that, once shut down, prevented <span class="note-highlight">nearly $5 million</span> in losses. That case is the reason I'm in cybersecurity — it proved that finding what's hidden was the part of the job I actually cared about.</p>
       </div>
       <div class="note-block violet">
         <div class="note-label">Field Note — The Detour</div>
-        <p>As a kid, the plan was to become an FBI agent. Life took a different route — but it eventually landed me at CISA, doing federal cyber defense work that scratched a lot of the same itch.</p>
+        <p>As a kid, the plan was to become an FBI agent. Life took a different route — but it eventually landed me in federal cyber defense work that scratched a lot of the same itch.</p>
       </div>
       <div class="note-block teal">
         <div class="note-label">Field Note — Public Service, Interrupted</div>
-        <p>My CISA role ended sooner than planned, a result of broader government workforce changes — not performance. I left on good terms and completed a smooth transition of my responsibilities.</p>
+        <p>My role in federal cybersecurity ended sooner than planned, a result of broader government workforce changes — not performance. I left on good terms and completed a smooth transition of my responsibilities.</p>
       </div>
       <div class="note-block gold">
         <div class="note-label">Field Note — Today</div>
-        <p>That thread carried me into <strong>IMC Companies</strong>, where I now own MFA deployment, access lifecycle management, and CIS Controls auditing across a 1,000+ user hybrid environment. I hold an active <strong>TS/SCI clearance</strong>, <strong>CompTIA Security+</strong>, and the <strong>UNC Charlotte Cybersecurity Certificate</strong> (4.0 GPA), and I'm bilingual in English and Spanish.</p>
+        <p>That thread carried me into enterprise security, where I now own MFA deployment, access lifecycle management, and CIS Controls auditing across a 1,000+ user hybrid environment. I hold an active <strong>TS/SCI clearance</strong>, <strong>CompTIA Security+</strong>, and the <strong>UNC Charlotte Cybersecurity Certificate</strong> (4.0 GPA), and I'm bilingual in English and Spanish.</p>
       </div>
-      <div class="doc-aside"><span class="doc-aside-label">Off the record —</span> When I'm not auditing access controls professionally, I'm doing it recreationally: on the pickleball court, and at home with two dogs who fail every audit but somehow still hold all the access.</div>
+      <div class="doc-aside">
+        <span class="doc-aside-label">Off the record —</span> When I'm not auditing access controls professionally, I'm doing it recreationally: on the pickleball court, and at home with two dogs who fail every audit but somehow still hold all the access.
+        <div class="aside-photos">
+          <figure class="polaroid">
+            <img src="Milo-Lilly.PNG" alt="Milo and Lilly, my two dogs">
+            <figcaption>Milo &amp; Lilly</figcaption>
+          </figure>
+          <figure class="polaroid">
+            <img src="PB.PNG" alt="Pickleball mode">
+            <figcaption>Pickleball mode</figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -399,6 +443,32 @@
     a.addEventListener('click', function(){
       list.classList.remove('open');
       toggle.setAttribute('aria-expanded','false');
+    });
+  });
+
+  document.querySelectorAll('.term').forEach(function(term){
+    var popup = term.querySelector('.term-popup');
+    if(popup){ popup.addEventListener('click', function(e){ e.stopPropagation(); }); }
+    term.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isOpen = term.classList.contains('open');
+      document.querySelectorAll('.term.open').forEach(function(t){
+        if(t !== term){ t.classList.remove('open'); t.setAttribute('aria-expanded','false'); }
+      });
+      term.classList.toggle('open', !isOpen);
+      term.setAttribute('aria-expanded', String(!isOpen));
+    });
+    term.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        term.click();
+      }
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.term.open').forEach(function(t){
+      t.classList.remove('open');
+      t.setAttribute('aria-expanded','false');
     });
   });
 </script>
